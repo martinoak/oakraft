@@ -15,10 +15,9 @@ Route::get('logout', [Controllers\AuthController::class, 'logout'])->name('logou
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [Controllers\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('team', [Controllers\AdminController::class, 'team'])->name('admin.team');
-    Route::get('livery', [Controllers\AdminController::class, 'livery'])->name('admin.livery');
-    Route::get('invoice', [Controllers\AdminController::class, 'invoice'])->name('admin.invoice');
-    Route::get('statistics', [Controllers\AdminController::class, 'statistics'])->name('admin.statistics');
+    Route::resource('team', Controllers\Admin\TeamController::class,)->names('admin.team');
+    Route::resource('liveries', Controllers\Admin\LiveryController::class)->names('admin.liveries');
+    Route::resource('invoices', Controllers\Admin\InvoiceController::class)->names('admin.invoices');
 });
 
 Route::prefix('account')->middleware('auth')->group(function () {
