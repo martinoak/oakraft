@@ -7,25 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Livery extends Model
 {
     protected $fillable = [
-        'name',
+        'aircraft',
         'airline',
+        'IATA',
         'type',
-        'price',
+        'path',
+        'price_jpg',
+        'price_png',
         'category',
         'featured',
-        'on_sale'
+        'on_sale',
+        'discount_jpg',
+        'discount_png'
     ];
 
     protected $casts = [
         'featured' => 'boolean',
         'on_sale' => 'boolean',
-        'price' => 'decimal:2',
+        'price_jpg' => 'decimal:2',
+        'price_png' => 'decimal:2',
+        'discount_jpg' => 'decimal:2',
+        'discount_png' => 'decimal:2',
     ];
-
-    public function getTagsArrayAttribute()
-    {
-        return $this->tags ? explode(',', $this->tags) : [];
-    }
 
     public function scopeFeatured($query)
     {

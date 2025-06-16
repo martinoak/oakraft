@@ -12,7 +12,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        abort(404);
     }
 
     /**

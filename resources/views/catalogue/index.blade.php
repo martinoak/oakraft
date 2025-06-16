@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('header')
+    <x-header :allow="true" />
+@endsection
+
 @section('content')
     <!-- Hero Header -->
     <div class="relative isolate overflow-hidden px-6 pt-24 sm:pt-32 pb-12 lg:px-8" style="background-color: #212121;">
@@ -25,7 +29,7 @@
         </div>
     </div>
 
-    <div class="bg-white">
+    {{--<div class="bg-white">
         <div>
             <!--
               Mobile filter dialog
@@ -731,6 +735,9 @@
                 </section>
             </main>
         </div>
-    </div>
+    </div>--}}
+
+    <livewire:catalogue-filter />
+
 @endsection
 

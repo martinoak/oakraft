@@ -27,6 +27,8 @@
 
     <x-flash-message />
 
+    @yield('scripts')
+
     <script>
         // Mobile menu toggle
         document.addEventListener('DOMContentLoaded', function() {

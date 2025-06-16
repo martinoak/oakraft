@@ -4,26 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Livery;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class LiveryController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $identifier): View
     {
-        $query = Livery::query();
+        $livery = Livery::findOrFail(explode('-', $identifier)[0]);
 
-        // Search functionality
-        if ($request->has('search') && $request->search) {
-            $query->search($request->search);
-        }
-
-        // Category filter
-        if ($request->has('category') && $request->category) {
-            $query->where('category', $request->category);
-        }
-
-        $liveries = $query->latest()->limit(4)->get();
-        $categories = Livery::distinct()->pluck('category')->filter();
-
-        return view('home', compact('liveries', 'categories'));
+        return view('livery.show', compact('livery'));
     }
 }

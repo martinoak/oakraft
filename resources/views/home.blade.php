@@ -1,57 +1,7 @@
 @extends('layout')
 
 @section('header')
-    <header class="absolute inset-x-0 top-0 z-50">
-        <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-            <div class="flex flex-1">
-                <div class="hidden lg:flex lg:gap-x-12">
-                    <x-navitem :class="'text-sm/6 font-semibold text-white hover:text-emerald-600'" />
-                </div>
-                <div class="flex lg:hidden">
-                    <button type="button" id="mobile-menu-button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <a href="{{ route('home') }}" class="-m-1.5 p-1.5">
-                <img class="h-12 w-auto" src="{{ asset('images/logo-green.svg') }}" alt="" />
-            </a>
-            <div class="flex flex-1 justify-end">
-                <a href="{{ route('login') }}" class="text-sm/6 font-semibold text-white hover:text-emerald-600">
-                    <i class="fa-regular fa-user fa-xl"></i>
-                </a>
-            </div>
-        </nav>
-        <!-- Mobile menu, show/hide based on menu open state. -->
-        <div class="lg:hidden hidden" id="mobile-menu" role="dialog" aria-modal="true">
-            <!-- Background backdrop, show/hide based on slide-over state. -->
-            <div class="fixed inset-0 z-10"></div>
-            <div class="fixed inset-y-0 left-0 z-10 w-full overflow-y-auto bg-white px-6 py-6">
-                <div class="flex items-center justify-between">
-                    <div class="flex flex-1">
-                        <button type="button" id="mobile-menu-close" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-                            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </div>
-                    <a href="{{ route('home') }}" class="-m-1.5 p-1.5">
-                        <span class="sr-only">Your Company</span>
-                        <img class="h-12 w-auto" src="{{ asset('images/logo.svg') }}" alt="" />
-                    </a>
-                    <div class="flex flex-1 justify-end">
-                        <a href="{{ route('login') }}" class="text-sm/6 font-semibold text-emerald-600">Log in</a>
-                    </div>
-                </div>
-                <div class="mt-6 space-y-2">
-                    <x-navitem :class="'-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-emerald-600 hover:bg-gray-50'" />
-                </div>
-            </div>
-        </div>
-    </header>
+    <x-header :allow="true" />
 @endsection
 
 @section('content')
@@ -88,11 +38,11 @@
                 </div>
                 <div class="flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6">
                     <dt class="text-base/7 text-gray-300">Liveries</dt>
-                    <dd class="text-3xl font-semibold tracking-tight text-white">50+</dd>
+                    <dd class="text-3xl font-semibold tracking-tight text-white">{{ \App\Models\Livery::count() }}+</dd>
                 </div>
                 <div class="flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6">
                     <dt class="text-base/7 text-gray-300">Airlines</dt>
-                    <dd class="text-3xl font-semibold tracking-tight text-white">20+</dd>
+                    <dd class="text-3xl font-semibold tracking-tight text-white">{{ \App\Models\Livery::distinct('airline')->count() }}+</dd>
                 </div>
                 <div class="flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6">
                     <dt class="text-base/7 text-gray-300">Dedication</dt>
@@ -148,9 +98,19 @@
                         </dl>
                     </div>
                 </div>
-                <img src="{{ asset('storage/delta-a319.png') }}" alt="Product screenshot"
-                     class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-                     width="2432" height="1442"/>
+                <div class="relative w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0 overflow-hidden"
+                     style="background-image: url('{{ asset('liveries/delta-a319.png') }}'); background-size: cover; background-position: center; aspect-ratio: 2432 / 1442;">
+
+                    <div class="absolute left-1 bottom-1 flex items-center gap-6 py-1 px-3 rounded-lg bg-emerald-600 shadow-lg"
+                         style="min-width: 340px;">
+                        <span class="text-white text-lg font-semibold">A gift from me to you. Enjoy it.</span>
+                        <a href="/download"
+                           class="ml-auto inline-block rounded-md bg-white px-3 py-1 my-1 text-emerald-600 font-bold shadow hover:bg-gray-100 transition">
+                            Download
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -172,53 +132,34 @@
                 @forelse($liveries as $livery)
                     <div class="group relative">
                         <div class="relative">
-                            @if($livery->image_path)
-                                <img
-                                    src="{{ asset('storage/' . $livery->image_path) }}"
-                                    alt="{{ $livery->name }}"
-                                    class="aspect-[4/3] w-full rounded-lg bg-gray-100 object-cover"
-                                >
-                            @else
-                                <div
-                                    class="aspect-[4/3] w-full rounded-lg bg-gradient-to-br from-emerald-400 to-black flex items-center justify-center">
-                                    <span
-                                        class="text-white text-lg font-semibold">{{ substr($livery->name, 0, 2) }}</span>
-                                </div>
-                            @endif
+                            <img
+                                src="{{ asset($livery->path) }}"
+                                alt="{{ $livery->name }}"
+                                class="aspect-[4/3] w-full rounded-lg bg-[#212121] object-contain"
+                            >
 
                             <!-- Hover overlay with View Product button -->
                             <div
-                                class="absolute inset-0 flex items-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                class="absolute inset-0 flex items-end py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                 aria-hidden="true">
                                 <div
-                                    class="w-full rounded-md bg-white/75 px-4 py-2 text-center text-sm font-medium text-white backdrop-blur backdrop-filter">
-                                    View Product
+                                    class="w-full rounded-md bg-black/60 px-4 py-2 text-center text-sm font-medium text-white backdrop-blur backdrop-filter">
+                                    View livery
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-white">
                             <h3>
-                                <a href="#">
+                                <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . $livery->aircraft)]) }}">
                                     <span aria-hidden="true" class="absolute inset-0"></span>
                                     {{ $livery->name }}
                                 </a>
                             </h3>
-                            @if($livery->for_sale && $livery->price)
-                                <p class="text-emerald-500">${{ number_format($livery->price, 0) }}</p>
-                            @elseif($livery->for_sale)
-                                <p class="text-sm">Contact</p>
-                            @else
-                                <p class="text-sm text-gray-400">N/A</p>
-                            @endif
                         </div>
 
-                        <p class="mt-1 text-sm text-gray-400">
-                            @if($livery->category)
-                                {{ ucfirst($livery->category) }}
-                            @else
-                                Livery Design
-                            @endif
+                        <p class="mt-1 text-sm font-bold text-emerald-600">
+                            {{ $livery->airline }} {{ $livery->aircraft }}
                         </p>
                     </div>
                 @empty

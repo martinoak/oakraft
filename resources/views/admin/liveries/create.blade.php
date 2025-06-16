@@ -1,0 +1,205 @@
+@extends('layout')
+
+@section('content')
+    <div>
+        <x-admin-sidebar />
+
+        <div class="lg:pl-72">
+            <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-800 bg-black/30 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+                <button type="button" class="-m-2.5 p-2.5 text-white lg:hidden">
+                    <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+
+                <!-- Separator -->
+                <div class="h-6 w-px bg-white/10 lg:hidden" aria-hidden="true"></div>
+
+                <div class="flex flex-1 items-center gap-x-4 self-stretch lg:gap-x-6">
+                    <div class="flex flex-1">
+                        <h1 class="text-2xl font-bold text-white">Nová livery</h1>
+                    </div>
+                </div>
+            </div>
+
+            <main class="py-10 px-6">
+                <form action="{{ route('admin.liveries.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="space-y-12 sm:space-y-16">
+                        <div>
+                            <h2 class="text-base/7 font-semibold text-white">Základní informace</h2>
+
+                            <div class="mt-10 space-y-8 border-b border-white/5 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="airline" class="block text-sm/6 font-medium text-white sm:pt-1.5">Aerolinka</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <input type="text" name="airline" id="airline" autocomplete="off" class="sm:max-w-2xl" required />
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="IATA" class="block text-sm/6 font-medium text-white sm:pt-1.5">Kód IATA</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <input type="text" name="IATA" id="IATA" autocomplete="off" class="sm:max-w-xs" required />
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="aircraft" class="block text-sm/6 font-medium text-white sm:pt-1.5">Letadlo</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <div class="grid grid-cols-1 sm:max-w-xs">
+                                            <select id="aircraft" name="aircraft" autocomplete="off" class="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pl-3 pr-8 text-base text-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6">
+                                                @foreach(\App\Enums\AircraftType::cases() as $option)
+                                                    <option value="{{ $option->value }}">{{ $option->value }}</option>
+                                                @endforeach
+                                            </select>
+                                            <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="type" class="block text-sm/6 font-medium text-white sm:pt-1.5">Typ livery</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <div class="grid grid-cols-1 sm:max-w-xs">
+                                            <select id="type" name="type" autocomplete="off" class="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pl-3 pr-8 text-base text-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6">
+                                                @foreach(\App\Enums\LiveryType::cases() as $option)
+                                                    <option value="{{ $option->value }}">{{ $option->value }}</option>
+                                                @endforeach
+                                            </select>
+                                            <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="cover-photo" class="block text-sm/6 font-medium text-white sm:pt-1.5">Ilustrace</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <div class="flex max-w-2xl justify-center rounded-lg border border-dashed border-white/30 px-6 py-10">
+                                            <div class="text-center">
+                                                <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
+                                                    <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
+                                                </svg>
+                                                <div class="mt-4 flex text-sm/6 text-gray-300">
+                                                    <label for="file" class="relative cursor-pointer rounded-md font-semibold text-emerald-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-emerald-600 focus-within:ring-offset-2 hover:text-emerald-500">
+                                                        <span>Nahrát soubor</span>
+                                                        <input id="file" name="file" type="file" class="sr-only" />
+                                                    </label>
+                                                    <p class="pl-1">nebo drag and drop</p>
+                                                </div>
+                                                <p class="text-xs/5 text-gray-300">JPG</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-base/7 font-semibold text-white">Cena</h2>
+                            <p class="mt-1 max-w-2xl text-sm/6 text-gray-300">JPG by měl být nejlevnější, PNG dražší.</p>
+
+                            <div class="mt-10 space-y-8 border-b border-white/5 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="price_jpg" class="block text-sm/6 font-medium text-white sm:pt-1.5">Cena za JPG</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <input type="text" name="price_jpg" id="price_jpg" autocomplete="off" value="6.99" class="sm:max-w-md" required />
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="price_png" class="block text-sm/6 font-medium text-white sm:pt-1.5">Cena za PNG</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <input type="text" name="price_png" id="price_png" autocomplete="off" value="9.99" class="sm:max-w-md" required />
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="email" class="block text-sm/6 font-medium text-white sm:pt-1.5">Sleva</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <!-- Enabled: "bg-emerald-600", Not Enabled: "bg-gray-200" -->
+                                        <button type="button" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-1 border-white bg-white/5 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2" role="switch" aria-checked="false">
+                                            <span class="sr-only">Use setting</span>
+                                            <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                                            <span class="pointer-events-none relative inline-block size-5 translate-x-0 transform rounded-full shadow ring-0 transition duration-200 ease-in-out">
+                                            <!-- Enabled: "opacity-0 duration-100 ease-out", Not Enabled: "opacity-100 duration-200 ease-in" -->
+                                            <span class="absolute inset-0 flex size-full items-center justify-center opacity-100 transition-opacity duration-200 ease-in" aria-hidden="true">
+                                              <svg class="size-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                                                <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                              </svg>
+                                            </span>
+                                                                                        <!-- Enabled: "opacity-100 duration-200 ease-in", Not Enabled: "opacity-0 duration-100 ease-out" -->
+                                            <span class="absolute inset-0 flex size-full items-center justify-center opacity-0 transition-opacity duration-100 ease-out" aria-hidden="true">
+                                              <svg class="size-3 text-emerald-600" fill="currentColor" viewBox="0 0 12 12">
+                                                <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                                              </svg>
+                                            </span>
+                                          </span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="discount_jpg" class="block text-sm/6 font-medium text-white sm:pt-1.5">Nová cena za JPG</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <input type="text" name="discount_jpg" id="discount_jpg" autocomplete="off" class="sm:max-w-md" />
+                                    </div>
+                                </div>
+
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="discount_png" class="block text-sm/6 font-medium text-white sm:pt-1.5">Nová cena za PNG</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <input type="text" name="discount_png" id="discount_png" autocomplete="off" class="sm:max-w-md" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 class="text-base/7 font-semibold text-white">Nastavení</h2>
+                            <p class="mt-1 max-w-2xl text-sm/6 text-gray-300">Dodatečné nastavení livery</p>
+
+                            <div class="mt-10 space-y-10 border-b border-white/5 pb-12 sm:space-y-0 sm:divide-y sm:divide-gray-900/10 sm:border-t sm:pb-0">
+                                <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
+                                    <label for="email" class="block text-sm/6 font-medium text-white sm:pt-1.5">Zobrazit v nabídce</label>
+                                    <div class="mt-2 sm:col-span-2 sm:mt-0">
+                                        <!-- Enabled: "bg-emerald-600", Not Enabled: "bg-gray-200" -->
+                                        <button type="button" class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-1 border-white bg-white/5 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2" role="switch" aria-checked="false">
+                                            <span class="sr-only">Use setting</span>
+                                            <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+                                            <span class="pointer-events-none relative inline-block size-5 translate-x-0 transform rounded-full shadow ring-0 transition duration-200 ease-in-out">
+                                            <!-- Enabled: "opacity-0 duration-100 ease-out", Not Enabled: "opacity-100 duration-200 ease-in" -->
+                                            <span class="absolute inset-0 flex size-full items-center justify-center opacity-100 transition-opacity duration-200 ease-in" aria-hidden="true">
+                                              <svg class="size-3 text-gray-400" fill="none" viewBox="0 0 12 12">
+                                                <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                              </svg>
+                                            </span>
+                                                <!-- Enabled: "opacity-100 duration-200 ease-in", Not Enabled: "opacity-0 duration-100 ease-out" -->
+                                            <span class="absolute inset-0 flex size-full items-center justify-center opacity-0 transition-opacity duration-100 ease-out" aria-hidden="true">
+                                              <svg class="size-3 text-emerald-600" fill="currentColor" viewBox="0 0 12 12">
+                                                <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                                              </svg>
+                                            </span>
+                                          </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex items-center justify-end gap-x-6">
+                        <button type="reset" class="text-sm/6 font-semibold text-white">Zrušit</button>
+                        <button type="submit" class="button px-6!">Uložit</button>
+                    </div>
+                </form>
+
+
+            </main>
+        </div>
+    </div>
+@endsection
