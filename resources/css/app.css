@@ -10,25 +10,16 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/* Custom utilities */
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
 
-.aspect-w-16 {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-}
+    body {
+        font-family: var(--font-sans), sans-serif;
+    }
 
-.aspect-w-16 > * {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    button {
+        @apply cursor-pointer;
+    }
 }

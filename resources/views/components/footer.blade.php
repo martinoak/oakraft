@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
         <div class="xl:grid xl:grid-cols-3 xl:gap-8">
             <div class="space-y-8">
-                <img class="h-16" src="{{ asset('images/logo-alt.svg') }}" alt="Company name" />
+                <img class="h-16" src="{{ asset('images/logo-green.svg') }}" alt="Company name" />
 
                 <p class="text-balance text-sm/6 text-gray-300">Creating stunning livery designs that make your vehicles stand out on track and street.</p>
                 <div class="flex gap-x-6">

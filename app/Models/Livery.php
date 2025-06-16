@@ -8,18 +8,17 @@ class Livery extends Model
 {
     protected $fillable = [
         'name',
-        'description',
-        'image_path',
+        'airline',
+        'type',
         'price',
         'category',
         'featured',
-        'for_sale',
-        'tags',
+        'on_sale'
     ];
 
     protected $casts = [
         'featured' => 'boolean',
-        'for_sale' => 'boolean',
+        'on_sale' => 'boolean',
         'price' => 'decimal:2',
     ];
 

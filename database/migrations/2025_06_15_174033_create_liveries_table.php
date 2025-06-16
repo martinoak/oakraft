@@ -14,13 +14,12 @@ return new class extends Migration
         Schema::create('liveries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
-            $table->string('image_path')->nullable();
+            $table->string('airline');
+            $table->enum('type', \App\Enums\LiveryType::toArray())->default(\App\Enums\LiveryType::BASIC);
             $table->decimal('price', 8, 2)->nullable();
             $table->string('category')->nullable();
             $table->boolean('featured')->default(false);
-            $table->boolean('for_sale')->default(true);
-            $table->string('tags')->nullable(); // JSON string for searchable tags
+            $table->boolean('on_sale')->default(true);
             $table->timestamps();
         });
     }
