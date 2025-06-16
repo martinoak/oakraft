@@ -27,11 +27,11 @@
                 <dl class="mb-10 grid grid-cols-1 gap-0.5 overflow-hidden rounded-2xl text-center sm:grid-cols-2 lg:grid-cols-4">
                     <div class="flex flex-col bg-white/5 p-8">
                         <dt class="text-sm/6 font-semibold text-gray-300">Liveries</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-white">8,000+</dd>
+                        <dd class="order-first text-3xl font-semibold tracking-tight text-white">{{ \App\Models\Livery::count() }}+</dd>
                     </div>
                     <div class="flex flex-col bg-white/5 p-8">
                         <dt class="text-sm/6 font-semibold text-gray-300">Aerolinek</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-white">25+</dd>
+                        <dd class="order-first text-3xl font-semibold tracking-tight text-white">{{ \App\Models\Livery::distinct('airline')->count() }}+</dd>
                     </div>
                     <div class="flex flex-col bg-white/5 p-8">
                         <dt class="text-sm/6 font-semibold text-gray-300">Počet objednávek</dt>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="flex flex-col bg-white/5 p-8">
                         <dt class="text-sm/6 font-semibold text-gray-300">Vyděláno</dt>
-                        <dd class="order-first text-3xl font-semibold tracking-tight text-white">6500 Kč</dd>
+                        <dd class="order-first text-3xl font-semibold tracking-tight text-white">0 Kč</dd>
                     </div>
                 </dl>
             </div>
@@ -54,50 +54,41 @@
                         <button type="button" class="block rounded-md bg-emerald-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">Přidat livery</button>
                     </div>
                 </div>
-                <div class="mt-8 flow-root">
-                    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                        <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                            <table class="min-w-full divide-y divide-gray-300">
-                                <thead>
-                                <tr>
-                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Aerolinka</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Letadlo</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Kategorie</th>
-                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Cena</th>
-                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
-                                        <span class="sr-only">Detail</span>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                <tr>
-                                    <td class="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
-                                        <div class="flex items-center">
-                                            <div class="size-11 shrink-0">
-                                                <img class="size-11 object-contain" src="{{ asset('images/tails/EY.png') }}" alt="" />
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="font-medium text-white">Etihad Airways</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                        <div class="text-white">Boeing</div>
-                                        <div class="mt-1 text-gray-500">787-9 Dreamliner</div>
-                                    </td>
-                                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                                        <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Active</span>
-                                    </td>
-                                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">Member</td>
-                                    <td class="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                        <a href="#" class="text-emerald-600 hover:text-emerald-900">Detail</a>
-                                    </td>
-                                </tr>
+                <div class="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
+                    @foreach(\App\Models\Livery::where('featured', true)->limit(4)->get() as $livery)
+                        <div class="group relative">
+                            <div class="relative">
+                                <img
+                                    src="{{ asset($livery->path) }}"
+                                    alt="{{ $livery->name }}"
+                                    class="aspect-[4/3] w-full rounded-lg bg-[#212121] object-contain"
+                                >
 
-                                </tbody>
-                            </table>
+                                <!-- Hover overlay with View Product button -->
+                                <div
+                                    class="absolute inset-0 flex items-end py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                    aria-hidden="true">
+                                    <div
+                                        class="w-full rounded-md bg-black/60 px-4 py-2 text-center text-sm font-medium text-white backdrop-blur backdrop-filter">
+                                        View livery
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-white">
+                                <h3>
+                                    <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . $livery->aircraft)]) }}">
+                                        <span aria-hidden="true" class="absolute inset-0"></span>
+                                        {{ $livery->name }}
+                                    </a>
+                                </h3>
+                            </div>
+
+                            <p class="mt-1 text-sm font-bold text-emerald-600">
+                                {{ $livery->airline }} {{ $livery->aircraft }}
+                            </p>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
 

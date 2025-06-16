@@ -63,7 +63,15 @@
                             <h2 class="text-sm font-medium text-gray-300">Disclaimer</h2>
 
                             <div class="mt-4 space-y-4 text-sm/6 text-gray-300">
-                                <p>The shop is a work in progress. If you want to buy any livery (can be more of them), please reach out to me at <a href="mailto:hello@oakraft.com" class="text-emerald-600 hover:text-emerald-800 underline">hello@oakraft.com</a>.</p>
+                                <p>The shop is a work in progress. If you want to buy any livery (can be more of them), please reach out to me at <a href="mailto:hello@oakraft.eu" class="text-emerald-600 hover:text-emerald-800 underline">hello@oakraft.eu</a>.</p>
+                            </div>
+
+                            <hr class="border-gray-300 my-6">
+
+                            <h2 class="text-sm font-medium text-gray-300">Disclaimer 2</h2>
+
+                            <div class="mt-4 space-y-4 text-sm/6 text-gray-300">
+                                <p>All liveries are of a high quality. If you are not satisfied with the quality, please reach out to me and we can work something out. You can reach me at <a href="mailto:hello@oakraft.eu" class="text-emerald-600 hover:text-emerald-800 underline">hello@oakraft.eu</a>.</p>
                             </div>
                         </div>
 

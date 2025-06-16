@@ -129,7 +129,7 @@
             </div>
 
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
-                @forelse($liveries as $livery)
+                @foreach($liveries as $livery)
                     <div class="group relative">
                         <div class="relative">
                             <img
@@ -162,26 +162,7 @@
                             {{ $livery->airline }} {{ $livery->aircraft }}
                         </p>
                     </div>
-                @empty
-                    <div class="col-span-full text-center py-12">
-                        <div class="text-gray-400 mb-4">
-                            <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33"/>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No liveries found</h3>
-                        <p class="text-gray-500">
-                            @if(request('search') || request('category'))
-                                Try adjusting your search criteria or <a href="{{ route('home') }}"
-                                                                         class="text-emerald-600 hover:text-emerald-800 underline">browse
-                                    all liveries</a>.
-                            @else
-                                Check back soon for new designs!
-                            @endif
-                        </p>
-                    </div>
-                @endforelse
+                @endforeach
             </div>
 
             <div>
@@ -198,28 +179,6 @@
 
         </div>
     </div>
-
-    <script>
-        // Real-time search functionality
-        document.addEventListener('DOMContentLoaded', function () {
-            const searchInput = document.querySelector('input[name="search"]');
-            const categorySelect = document.querySelector('select[name="category"]');
-
-            // Auto-submit form on category change
-            categorySelect.addEventListener('change', function () {
-                this.form.submit();
-            });
-
-            // Optional: Add debounced search
-            let searchTimeout;
-            searchInput.addEventListener('input', function () {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    // You can implement AJAX search here if needed
-                }, 500);
-            });
-        });
-    </script>
 @endsection
 
 @section('footer')
