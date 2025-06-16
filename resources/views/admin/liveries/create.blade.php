@@ -47,16 +47,7 @@
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="aircraft" class="block text-sm/6 font-medium text-white sm:pt-1.5">Letadlo</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <div class="grid grid-cols-1 sm:max-w-xs">
-                                            <select id="aircraft" name="aircraft" autocomplete="off" class="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pl-3 pr-8 text-base text-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6">
-                                                @foreach(\App\Enums\AircraftType::cases() as $option)
-                                                    <option value="{{ $option->value }}">{{ $option->value }}</option>
-                                                @endforeach
-                                            </select>
-                                            <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                                <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
+                                        <input type="text" name="aircraft" id="aircraft" autocomplete="off" class="sm:max-w-xs" required />
                                     </div>
                                 </div>
 
@@ -206,60 +197,166 @@
 
 @section('scripts')
     <script>
+        // --- Aerolinky a IATA kódy ---
+        window.airlines = @json(\App\Services\AirlineIATA::$airlines);
+        window.aircraftTypes = @json(array_map(fn($c) => $c->value, \App\Enums\AircraftType::cases()));
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- File upload preview (původní kód) ---
             const fileInput = document.querySelector('input[type="file"]');
             const previewDiv = document.getElementById('preview');
-            if (!fileInput || !previewDiv) return;
-
-            // Vytvoření kontejneru pro náhled
-            let previewContainer = document.createElement('div');
-            previewContainer.style.display = 'none';
-            previewContainer.style.cursor = 'pointer';
-            previewContainer.id = 'file-preview-container';
-            previewDiv.parentNode.insertBefore(previewContainer, previewDiv.nextSibling);
-
-            // Funkce pro formátování velikosti souboru
-            function formatSize(bytes) {
-                if (bytes < 1024) return bytes + ' B';
-                if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-                return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+            if (fileInput && previewDiv) {
+                let previewContainer = document.createElement('div');
+                previewContainer.style.display = 'none';
+                previewContainer.style.cursor = 'pointer';
+                previewContainer.id = 'file-preview-container';
+                previewDiv.parentNode.insertBefore(previewContainer, previewDiv.nextSibling);
+                function formatSize(bytes) {
+                    if (bytes < 1024) return bytes + ' B';
+                    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+                    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+                }
+                fileInput.addEventListener('change', function () {
+                    const file = fileInput.files[0];
+                    if (!file) return;
+                    previewDiv.style.display = 'none';
+                    previewContainer.innerHTML = '';
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.style.maxWidth = '200px';
+                        img.style.maxHeight = '200px';
+                        img.style.display = 'block';
+                        img.style.marginBottom = '8px';
+                        previewContainer.appendChild(img);
+                    }
+                    const info = document.createElement('div');
+                    info.textContent = `${file.name} (${formatSize(file.size)})`;
+                    info.style.color = '#fff';
+                    info.style.fontSize = '0.95em';
+                    previewContainer.appendChild(info);
+                    previewContainer.style.display = 'block';
+                });
+                previewContainer.addEventListener('click', function () {
+                    fileInput.click();
+                });
             }
 
-            fileInput.addEventListener('change', function () {
-                const file = fileInput.files[0];
-                if (!file) return;
+            // --- Aerolinka/IATA autocomplete ---
+            const airlineInput = document.getElementById('airline');
+            const iataInput = document.getElementById('IATA');
+            const airlines = window.airlines || {};
+            if (airlineInput && iataInput) {
+                // Dropdown
+                const dropdown = document.createElement('ul');
+                dropdown.style.position = 'absolute';
+                dropdown.style.background = '#222';
+                dropdown.style.color = '#fff';
+                dropdown.style.border = '1px solid #444';
+                dropdown.style.zIndex = 1000;
+                dropdown.style.listStyle = 'none';
+                dropdown.style.padding = '0';
+                dropdown.style.margin = '0';
+                dropdown.style.maxHeight = '180px';
+                dropdown.style.overflowY = 'auto';
+                dropdown.style.display = 'none';
+                dropdown.className = 'airline-dropdown';
+                // Umístění dropdownu relativně k inputu
+                airlineInput.parentNode.style.position = 'relative';
+                airlineInput.parentNode.appendChild(dropdown);
 
-                // Skrytí původního preview
-                previewDiv.style.display = 'none';
+                airlineInput.addEventListener('input', function () {
+                    const value = airlineInput.value.toLowerCase();
+                    dropdown.innerHTML = '';
+                    if (!value) {
+                        dropdown.style.display = 'none';
+                        return;
+                    }
+                    let found = false;
+                    Object.keys(airlines).forEach(function (name) {
+                        if (name.toLowerCase().includes(value)) {
+                            const li = document.createElement('li');
+                            li.textContent = name + ' (' + airlines[name] + ')';
+                            li.style.padding = '4px 8px';
+                            li.style.cursor = 'pointer';
+                            li.addEventListener('mousedown', function (e) {
+                                e.preventDefault();
+                                airlineInput.value = name;
+                                iataInput.value = airlines[name];
+                                dropdown.style.display = 'none';
+                            });
+                            dropdown.appendChild(li);
+                            found = true;
+                        }
+                    });
+                    dropdown.style.display = found ? 'block' : 'none';
+                });
+                // Skrytí dropdownu při kliknutí mimo
+                document.addEventListener('mousedown', function (e) {
+                    if (!dropdown.contains(e.target) && e.target !== airlineInput) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+                // Po změně airline vyplnit IATA, pokud přesně sedí
+                airlineInput.addEventListener('change', function () {
+                    if (airlines[airlineInput.value]) {
+                        iataInput.value = airlines[airlineInput.value];
+                    }
+                });
+            }
 
-                // Vymazání předchozího náhledu
-                previewContainer.innerHTML = '';
+            // --- Letadlo autocomplete ---
+            const aircraftInput = document.getElementById('aircraft');
+            const aircraftTypes = window.aircraftTypes || [];
+            if (aircraftInput) {
+                const dropdown = document.createElement('ul');
+                dropdown.style.position = 'absolute';
+                dropdown.style.background = '#222';
+                dropdown.style.color = '#fff';
+                dropdown.style.border = '1px solid #444';
+                dropdown.style.zIndex = 1000;
+                dropdown.style.listStyle = 'none';
+                dropdown.style.padding = '0';
+                dropdown.style.margin = '0';
+                dropdown.style.maxHeight = '180px';
+                dropdown.style.overflowY = 'auto';
+                dropdown.style.display = 'none';
+                dropdown.className = 'aircraft-dropdown';
+                aircraftInput.parentNode.style.position = 'relative';
+                aircraftInput.parentNode.appendChild(dropdown);
 
-                // Vytvoření náhledu obrázku
-                if (file.type.startsWith('image/')) {
-                    const img = document.createElement('img');
-                    img.src = URL.createObjectURL(file);
-                    img.style.maxWidth = '200px';
-                    img.style.maxHeight = '200px';
-                    img.style.display = 'block';
-                    img.style.marginBottom = '8px';
-                    previewContainer.appendChild(img);
-                }
-
-                // Název a velikost
-                const info = document.createElement('div');
-                info.textContent = `${file.name} (${formatSize(file.size)})`;
-                info.style.color = '#fff';
-                info.style.fontSize = '0.95em';
-                previewContainer.appendChild(info);
-
-                previewContainer.style.display = 'block';
-            });
-
-            // Po kliknutí na náhled otevřít znovu file dialog
-            previewContainer.addEventListener('click', function () {
-                fileInput.click();
-            });
+                aircraftInput.addEventListener('input', function () {
+                    const value = aircraftInput.value.toLowerCase();
+                    dropdown.innerHTML = '';
+                    if (!value) {
+                        dropdown.style.display = 'none';
+                        return;
+                    }
+                    let found = false;
+                    aircraftTypes.forEach(function (type) {
+                        if (type.toLowerCase().includes(value)) {
+                            const li = document.createElement('li');
+                            li.textContent = type;
+                            li.style.padding = '4px 8px';
+                            li.style.cursor = 'pointer';
+                            li.addEventListener('mousedown', function (e) {
+                                e.preventDefault();
+                                aircraftInput.value = type;
+                                dropdown.style.display = 'none';
+                            });
+                            dropdown.appendChild(li);
+                            found = true;
+                        }
+                    });
+                    dropdown.style.display = found ? 'block' : 'none';
+                });
+                document.addEventListener('mousedown', function (e) {
+                    if (!dropdown.contains(e.target) && e.target !== aircraftInput) {
+                        dropdown.style.display = 'none';
+                    }
+                });
+            }
         });
     </script>
 @endsection

@@ -4,6 +4,8 @@ namespace App\Enums;
 
 enum AircraftType: string
 {
+    case BCS1 = 'Airbus A220-100';
+    case BCS3 = 'Airbus A220-300';
     case A318 = 'Airbus A318';
     case A319 = 'Airbus A319';
     case A19N = 'Airbus A319neo';

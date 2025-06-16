@@ -4,8 +4,8 @@ namespace App\Enums;
 
 enum LiveryType: string
 {
-    case WHITE = 'Bílá (bez livery)';
     case BASIC = 'Klasická';
+    case WHITE = 'Bílá (bez livery)';
     case SPECIAL = 'Speciální';
 
     public static function toArray(): array
