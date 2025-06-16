@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-50 min-h-screen h-full">
+<body class="bg-[#212121] min-h-screen h-full">
     @yield('header')
 
     <main>

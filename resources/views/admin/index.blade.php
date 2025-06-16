@@ -1,14 +1,6 @@
 @extends('layout')
 
 @section('content')
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-white">
-  <body class="h-full">
-  ```
--->
 <div>
     <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
     <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
@@ -58,7 +50,7 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-emerald-600 px-6 pb-4">
                     <div class="flex h-16 shrink-0 items-center">
-                        <img class="h-8 w-auto" src="{{ asset('images/logo.svg') }}" alt="Your Company" />
+                        <img class="h-8 w-auto" src="{{ asset('images/logo-white.svg') }}" alt="Your Company" />
                     </div>
                     <nav class="flex flex-1 flex-col">
                         <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -161,7 +153,7 @@
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-emerald-600 px-6 pb-4">
             <div class="flex h-16 shrink-0 items-center">
-                <img class="h-16 py-3 w-auto" src="{{ asset('images/logo.svg') }}" alt="Your Company" />
+                <img class="h-16 py-3 w-auto" src="{{ asset('images/logo-white.svg') }}" alt="Your Company" />
             </div>
             <nav class="flex flex-1 flex-col">
                 <ul role="list" class="flex flex-1 flex-col gap-y-7">
@@ -250,8 +242,8 @@
     </div>
 
     <div class="lg:pl-72">
-        <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden">
+        <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-800 bg-black/30 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+            <button type="button" class="-m-2.5 p-2.5 text-white lg:hidden">
                 <span class="sr-only">Open sidebar</span>
                 <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -263,7 +255,7 @@
 
             <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                 <form class="grid flex-1 grid-cols-1" action="#" method="GET">
-                    <input type="search" name="search" aria-label="Search" class="col-start-1 row-start-1 block size-full bg-white pl-8 text-base text-gray-900 outline-none placeholder:text-gray-400 sm:text-sm/6" placeholder="Search" />
+                    <input type="search" name="search" aria-label="Search" class="col-start-1 row-start-1 block size-full pl-8 text-base text-white outline-none placeholder:text-gray-400 sm:text-sm/6" placeholder="Search" />
                     <svg class="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                         <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd" />
                     </svg>

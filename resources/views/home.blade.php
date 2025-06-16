@@ -155,7 +155,7 @@
         </div>
     </div>
 
-    <div id="portfolio" class="bg-black/80">
+    <div id="portfolio" class="bg-black/30">
         <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8">
             <div class="flex items-center justify-between space-x-4 mb-6">
                 <h2 class="text-4xl font-bold text-white mb-4">Featured Liveries</h2>
