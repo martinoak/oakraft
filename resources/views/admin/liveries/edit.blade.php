@@ -17,7 +17,7 @@
 
                 <div class="flex flex-1 items-center gap-x-4 self-stretch lg:gap-x-6">
                     <div class="flex flex-1">
-                        <h1 class="text-2xl font-bold text-white">Nová livery</h1>
+                        <h1 class="text-2xl font-bold text-white">{{ $livery->airline }} {{ $livery->aircraft }}</h1>
                     </div>
                 </div>
             </div>

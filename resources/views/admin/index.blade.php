@@ -51,7 +51,7 @@
                         <p class="mt-2 text-sm text-gray-300">Tabulka čtyř hlavních livery na homepage</p>
                     </div>
                     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                        <button type="button" class="block rounded-md bg-emerald-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">Přidat livery</button>
+                        <a href="{{ route('admin.liveries.create') }}" class="button">Přidat livery</a>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
@@ -77,7 +77,7 @@
 
                             <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-white">
                                 <h3>
-                                    <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . $livery->aircraft)]) }}">
+                                    <a href="{{ route('admin.liveries.show', ['livery' => $livery->id]) }}">
                                         <span aria-hidden="true" class="absolute inset-0"></span>
                                         {{ $livery->name }}
                                     </a>

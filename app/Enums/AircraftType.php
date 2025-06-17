@@ -82,4 +82,9 @@ enum AircraftType: string
     case E195 = 'Embraer E195';
     case E290 = 'Embraer E190-E2';
     case E295 = 'Embraer E195-E2';
+
+    public static function toArray(): array
+    {
+        return array_column(self::cases(), 'value');
+    }
 }

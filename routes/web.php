@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Controllers\HomepageController::class, 'index'])->name('home');
 Route::get('download', [Controllers\HomepageController::class, 'download'])->name('livery.download');
+
 Route::resource('livery', Controllers\LiveryController::class)->only(['show'])->names('livery');
+Route::resource('airlines', Controllers\AirlinesController::class)->only(['index', 'show'])->names('airlines');
+
 Route::get('catalogue', [Controllers\CatalogueController::class, 'index'])->name('catalogue');
 
 Route::get('register', [Controllers\AuthController::class, 'register'])->name('register');

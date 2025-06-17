@@ -35,9 +35,14 @@ class LiveryController extends Controller
      */
     public function store(StoreLiveryRequest $request): RedirectResponse
     {
-        $filename = Str::slug($request->IATA . '-' . $request->aircraft) . '.' . $request->file('file')->getClientOriginalExtension();
-        $request->file('file')->move(public_path('liveries'), $filename);
-        $path = '/liveries/' . $filename;
+        $file = $request->file('file');
+        if ($file && $file->isValid()) {
+            $filename = Str::slug($request->IATA . '-' . $request->aircraft) . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('liveries'), $filename);
+            $path = '/liveries/' . $filename;
+        } else {
+            return back()->withErrors(['file' => 'Soubor nebyl nahrán nebo je neplatný.']);
+        }
 
         Livery::create([
             'aircraft' => $request->aircraft,
@@ -47,9 +52,9 @@ class LiveryController extends Controller
             'path' => $path,
             'price_jpg' => $request->price_jpg,
             'price_png' => $request->price_png,
-            'category' => $request->category,
-            'featured' => $request->featured ?? false,
-            'on_sale' => $request->on_sale ?? false,
+            'category' => $request->type ?? null,
+            'featured' => $request->has('featured'),
+            'on_sale' => $request->has('discount'),
             'discount_jpg' => $request->discount_jpg,
             'discount_png' => $request->discount_png,
         ]);
@@ -60,17 +65,17 @@ class LiveryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): View
     {
-        //
+        return view('admin.liveries.show', ['livery' => Livery::findOrFail($id)]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        return view('admin.liveries.edit', ['livery' => Livery::findOrFail($id)]);
     }
 
     /**
@@ -84,8 +89,10 @@ class LiveryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        Livery::destroy($id);
+
+        return to_route('admin.dashboard')->with('success', 'Livery byla úspěšně smazána.');
     }
 }
