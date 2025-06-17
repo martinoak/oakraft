@@ -33,7 +33,7 @@
                                     {{ $livery->airline }} {{ $livery->aircraft }}
                                 </a>
                             </h3>
-                            <p class="mt-4 text-base font-medium text-emerald-600">from $6.99</p>
+                            <p class="mt-4 text-base font-medium text-emerald-600">from ${{ min($livery->price_jpg, $livery->price_png) }}</p>
                         </div>
                     </div>
                 @endforeach
