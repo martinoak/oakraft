@@ -81,9 +81,25 @@ class LiveryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        $livery = Livery::findOrFail($id);
+
+        $livery->update([
+            'aircraft' => $request->aircraft,
+            'airline' => $request->airline,
+            'IATA' => $request->IATA,
+            'type' => $request->type,
+            'price_jpg' => $request->price_jpg,
+            'price_png' => $request->price_png,
+            'category' => $request->type ?? null,
+            'on_sale' => $request->has('discount'),
+            'discount_jpg' => $request->has('discount') ? $request->discount_jpg : null,
+            'discount_png' => $request->has('discount') ? $request->discount_png : null,
+            'featured' => $request->has('featured'),
+        ]);
+
+        return redirect()->route('admin.liveries.index')->with('success', 'Livery byla úspěšně upravena.');
     }
 
     /**

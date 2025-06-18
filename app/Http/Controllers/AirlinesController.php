@@ -13,7 +13,7 @@ class AirlinesController extends Controller
      */
     public function index(): View
     {
-        $airlines = Livery::all()->unique('airline');
+        $airlines = Livery::all()->unique('airline')->sortByDesc(fn($group) => $group->count());
 
         return view('airlines.index', compact('airlines'));
     }

@@ -60,7 +60,13 @@
                         @foreach($airlines as $airline)
                             <li class="inline-flex w-64 flex-col text-center lg:w-auto">
                                 <div class="group relative">
-                                    <img src="{{ asset('images/tails/'.strtoupper($airline->IATA).'.png') }}" alt="{{ $airline->airline }}" class="aspect-square w-full p-6 rounded-md object-contain grayscale group-hover:grayscale-0" />
+                                    @if(file_exists(public_path('images/tails/'.strtoupper($airline->IATA).'.png')))
+                                        <img src="{{ asset('images/tails/'.strtoupper($airline->IATA).'.png') }}" alt="{{ $airline->airline }}" class="aspect-square w-full p-6 rounded-md object-contain  border border-white/20 grayscale group-hover:grayscale-0" />
+                                    @else
+                                        <div class="aspect-square w-full p-6 rounded-md object-contain border border-white/20 bg-[#212121] flex items-center justify-center">
+                                            <i class="fa-solid fa-plane-up text-5xl text-gray-300 group-hover:text-white"></i>
+                                        </div>
+                                    @endif
                                     <div class="mt-6">
                                         <h3 class="mt-1 font-semibold text-white">
                                             <a href="{{ route('airlines.show', ['airline' => $airline->IATA]) }}">

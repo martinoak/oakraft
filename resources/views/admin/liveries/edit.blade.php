@@ -26,8 +26,9 @@
 
                 <x-form-errors />
 
-                <form action="{{ route('admin.liveries.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.liveries.update', ['livery' => $livery->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="space-y-12 sm:space-y-16">
                         <div>
                             <h2 class="text-base/7 font-semibold text-white">Základní informace</h2>
@@ -36,21 +37,21 @@
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="aircraft" class="block text-sm/6 font-medium text-white sm:pt-1.5">Letadlo</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <input type="text" name="aircraft" id="aircraft" value="{{ old('aircraft') }}" autocomplete="off" class="sm:max-w-xs" required />
+                                        <input type="text" name="aircraft" id="aircraft" value="{{ old('aircraft', $livery->aircraft) }}" autocomplete="off" class="sm:max-w-xs" required />
                                     </div>
                                 </div>
 
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="airline" class="block text-sm/6 font-medium text-white sm:pt-1.5">Aerolinka</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <input type="text" name="airline" id="airline" value="{{ old('airline') }}" autocomplete="off" class="sm:max-w-2xl" required />
+                                        <input type="text" name="airline" id="airline" value="{{ old('airline', $livery->airline) }}" autocomplete="off" class="sm:max-w-2xl" required />
                                     </div>
                                 </div>
 
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="IATA" class="block text-sm/6 font-medium text-white sm:pt-1.5">Kód IATA</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <input type="text" name="IATA" id="IATA" value="{{ old('IATA') }}" autocomplete="off" class="sm:max-w-xs" required />
+                                        <input type="text" name="IATA" id="IATA" value="{{ old('IATA', $livery->IATA) }}" autocomplete="off" class="sm:max-w-xs" required />
                                     </div>
                                 </div>
 
@@ -60,7 +61,7 @@
                                         <div class="grid grid-cols-1 sm:max-w-xs">
                                             <select id="type" name="type" autocomplete="off" class="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pl-3 pr-8 text-base text-white outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-emerald-600 sm:text-sm/6">
                                                 @foreach(\App\Enums\LiveryType::cases() as $option)
-                                                    <option value="{{ $option->value }}" @selected(old('type') === $option->value)>{{ $option->value }}</option>
+                                                    <option value="{{ $option->value }}" @selected(old('type', $livery->type) === $option->value)>{{ $option->value }}</option>
                                                 @endforeach
                                             </select>
                                             <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
@@ -73,19 +74,10 @@
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="cover-photo" class="block text-sm/6 font-medium text-white sm:pt-1.5">Ilustrace</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <div class="flex max-w-2xl justify-center rounded-lg border border-dashed border-white/30 px-6 py-10">
-                                            <div id="preview" class="text-center">
-                                                <svg class="mx-auto size-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" data-slot="icon">
-                                                    <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 0 1 2.25-2.25h16.5A2.25 2.25 0 0 1 22.5 6v12a2.25 2.25 0 0 1-2.25 2.25H3.75A2.25 2.25 0 0 1 1.5 18V6ZM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0 0 21 18v-1.94l-2.69-2.689a1.5 1.5 0 0 0-2.12 0l-.88.879.97.97a.75.75 0 1 1-1.06 1.06l-5.16-5.159a1.5 1.5 0 0 0-2.12 0L3 16.061Zm10.125-7.81a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Z" clip-rule="evenodd" />
-                                                </svg>
-                                                <div class="mt-4 flex text-sm/6 text-gray-300">
-                                                    <label for="file" class="relative cursor-pointer rounded-md font-semibold text-emerald-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-emerald-600 focus-within:ring-offset-2 hover:text-emerald-500">
-                                                        <span>Nahrát soubor</span>
-                                                        <input id="file" name="file" type="file" class="sr-only" />
-                                                    </label>
-                                                    <p class="pl-1">nebo drag and drop</p>
-                                                </div>
-                                                <p class="text-xs/5 text-gray-300">pouze .jpg</p>
+                                        <div class="flex items-center max-w-2xl p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                                            <i class="fa-solid fa-circle-xmark fa-xl mr-4" style="color: #dc2626;"></i>
+                                            <div>
+                                                <span class="font-medium">Z bezpečnostních důvodů nelze nahrát nový obrázek. Pokud je potřeba jej změnít, musí se livery smazat a opět nahrát.</span>
                                             </div>
                                         </div>
                                     </div>
@@ -101,14 +93,14 @@
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="price_jpg" class="block text-sm/6 font-medium text-white sm:pt-1.5">Cena za JPG</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <input type="number" name="price_jpg" id="price_jpg" autocomplete="off" value="{{ old('price_jpg', '6.99') }}" step="0.01" class="sm:max-w-md" required />
+                                        <input type="number" name="price_jpg" id="price_jpg" autocomplete="off" value="{{ old('price_jpg', $livery->price_jpg) }}" step="0.01" class="sm:max-w-md" required />
                                     </div>
                                 </div>
 
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="price_png" class="block text-sm/6 font-medium text-white sm:pt-1.5">Cena za PNG</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <input type="number" name="price_png" id="price_png" autocomplete="off" value="{{ old('price_jpg', '9.99') }}" step="0.01" class="sm:max-w-md" required />
+                                        <input type="number" name="price_png" id="price_png" autocomplete="off" value="{{ old('price_jpg', $livery->price_png) }}" step="0.01" class="sm:max-w-md" required />
                                     </div>
                                 </div>
 
@@ -116,7 +108,7 @@
                                     <label for="discount-toggle" class="block text-sm/6 font-medium text-white sm:pt-1.5">Sleva</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
                                         <label class="inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" name="discount" id="discount-toggle" class="sr-only peer" @checked(old('discount'))>
+                                            <input type="checkbox" name="discount" id="discount-toggle" class="sr-only peer" @checked(old('discount', $livery->on_sale))>
                                             <div class="toggler peer peer-focus:outline-none peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
                                         </label>
                                     </div>
@@ -125,14 +117,14 @@
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                         <label for="discount_jpg" class="block text-sm/6 font-medium text-white sm:pt-1.5">Nová cena za JPG</label>
                                         <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                            <input type="number" name="discount_jpg" id="discount_jpg" value="{{ old('discount_jpg') }}" step="0.01" autocomplete="off" class="sm:max-w-md" />
+                                            <input type="number" name="discount_jpg" id="discount_jpg" value="{{ old('discount_jpg', $livery->discount_jpg) }}" step="0.01" autocomplete="off" class="sm:max-w-md" />
                                         </div>
                                     </div>
 
                                     <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                         <label for="discount_png" class="block text-sm/6 font-medium text-white sm:pt-1.5">Nová cena za PNG</label>
                                         <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                            <input type="number" name="discount_png" id="discount_png" value="{{ old('discount_png') }}" step="0.01" autocomplete="off" class="sm:max-w-md" />
+                                            <input type="number" name="discount_png" id="discount_png" value="{{ old('discount_png', $livery->discount_png) }}" step="0.01" autocomplete="off" class="sm:max-w-md" />
                                         </div>
                                     </div>
                                 </div>
@@ -162,8 +154,6 @@
                         <button type="submit" class="button px-6!">Uložit</button>
                     </div>
                 </form>
-
-
             </main>
         </div>
     </div>
