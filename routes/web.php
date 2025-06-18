@@ -22,6 +22,8 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('team', Controllers\Admin\TeamController::class)->names('admin.team');
     Route::get('tasks', [Controllers\Admin\AdminController::class, 'tasks'])->name('admin.tasks');
+    Route::get('templates', [Controllers\Admin\AdminController::class, 'templates'])->name('admin.templates');
+    Route::get('templates/{template}', [Controllers\Admin\AdminController::class, 'downloadTemplate'])->name('admin.templates.download');
     Route::resource('liveries', Controllers\Admin\LiveryController::class)->names('admin.liveries');
     Route::resource('invoices', Controllers\Admin\InvoiceController::class)->names('admin.invoices');
     Route::get('stats', [Controllers\Admin\AdminController::class, 'stats'])->name('admin.stats');

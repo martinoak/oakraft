@@ -145,7 +145,6 @@
 
 <!-- Static sidebar for desktop -->
 <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-    <!-- Sidebar component, swap this element with another sidebar if you like -->
     <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-emerald-600 px-6 pb-4">
         <div class="flex h-16 shrink-0 items-center">
             <img class="h-16 py-3 w-auto" src="{{ asset('images/logo-white.svg') }}" alt="Your Company" />
@@ -169,6 +168,18 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                 </svg>
                                 Tým
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.tasks') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-emerald-200 hover:bg-emerald-700 hover:text-white">
+                                <i class="fa-solid fa-list-check fa-xl shrink-0 text-emerald-200 group-hover:text-white"></i>
+                                Úkoly
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.templates') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-emerald-200 hover:bg-emerald-700 hover:text-white">
+                                <i class="fa-regular fa-object-ungroup fa-xl shrink-0 text-emerald-200 group-hover:text-white"></i>
+                                Šablony
                             </a>
                         </li>
                         <li>
