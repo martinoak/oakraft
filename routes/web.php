@@ -20,10 +20,12 @@ Route::get('logout', [Controllers\AuthController::class, 'logout'])->name('logou
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
-    Route::resource('team', Controllers\Admin\TeamController::class,)->names('admin.team');
+    Route::resource('team', Controllers\Admin\TeamController::class)->names('admin.team');
+    Route::get('tasks', [Controllers\Admin\AdminController::class, 'tasks'])->name('admin.tasks');
     Route::resource('liveries', Controllers\Admin\LiveryController::class)->names('admin.liveries');
     Route::resource('invoices', Controllers\Admin\InvoiceController::class)->names('admin.invoices');
     Route::get('stats', [Controllers\Admin\AdminController::class, 'stats'])->name('admin.stats');
+    Route::get('wishlist', [Controllers\Admin\AdminController::class, 'wishlist'])->name('admin.wishlist');
 });
 
 Route::prefix('account')->middleware('auth')->group(function () {

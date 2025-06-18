@@ -151,7 +151,7 @@
 
                         <div class="mt-4 flex items-center justify-between space-x-8 text-base font-medium text-white">
                             <h3>
-                                <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . $livery->aircraft)]) }}">
+                                <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . \Illuminate\Support\Str::slug($livery->aircraft))]) }}">
                                     <span aria-hidden="true" class="absolute inset-0"></span>
                                     {{ $livery->name }}
                                 </a>

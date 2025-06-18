@@ -196,6 +196,12 @@
                                 Statistika
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('admin.wishlist') }}" class="group flex items-center gap-x-3 rounded-md p-2 text-sm/6 font-semibold text-emerald-200 hover:bg-emerald-700 hover:text-white">
+                                <i class="fa-regular fa-heart fa-xl shrink-0 text-emerald-200 group-hover:text-white"></i>
+                                Seznam přání
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 {{--<li>

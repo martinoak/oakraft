@@ -40,7 +40,7 @@
                             <div class="mt-4 flex justify-between">
                                 <div>
                                     <h3 class="text-sm font-medium text-white">
-                                        <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . $livery->aircraft)]) }}">
+                                        <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . \Illuminate\Support\Str::slug($livery->aircraft))]) }}">
                                             <span aria-hidden="true" class="absolute inset-0"></span>
                                             {{ $livery->aircraft }}
                                         </a>

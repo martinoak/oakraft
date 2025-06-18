@@ -53,8 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileFilterDialog = document.querySelector('.lg\\:hidden[role="dialog"]');
     const mobileFilterBackdrop = mobileFilterDialog?.querySelector('.fixed.inset-0.bg-black\\/25');
     const mobileFilterPanel = mobileFilterDialog?.querySelector('.fixed.inset-0.z-40.flex');
-    const openMobileFilterBtn = document.querySelector('button span.sr-only:contains("Filters")')?.parentElement;
-    const closeMobileFilterBtn = mobileFilterDialog?.querySelector('button span.sr-only:contains("Close menu")')?.parentElement;
 
     // Helper for :contains polyfill
     function findButtonBySrOnlyText(text) {

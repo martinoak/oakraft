@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Livery;
+use App\Models\Wishlist;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -16,6 +17,9 @@ class CatalogueFilter extends Component
     public array $filter = [];
     public string $sortBy = 'updated_at';
     public string $sortDirection = self::DESC;
+    public bool $showWishlistForm = false;
+    public string $wishlistText = '';
+    public string $formMessage = '';
 
     public int $page = 1;
 
@@ -33,6 +37,21 @@ class CatalogueFilter extends Component
     {
         $this->filter[$field] = $value;
         $this->page = 1;
+    }
+
+    public function toggleWishlistForm(): void
+    {
+        $this->showWishlistForm = ! $this->showWishlistForm;
+    }
+
+    public function wishlist(): void
+    {
+        Wishlist::create([
+            'ip' => request()->ip(),
+            'text' => $this->wishlistText,
+        ]);
+
+        $this->formMessage = 'We have accepted your request, please check back later!';
     }
 
     public function paginate(int $page): void
