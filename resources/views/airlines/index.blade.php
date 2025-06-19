@@ -54,14 +54,14 @@
     <div class="bg-[#212121]">
         <div class="py-16 sm:py-24 lg:mx-auto lg:max-w-7xl lg:px-8">
 
-            <div class="relative mt-8">
+            <div class="relative">
                 <div class="relative -mb-6 w-full overflow-x-auto pb-6">
                     <ul role="list" class="mx-4 inline-flex space-x-8 sm:mx-6 lg:mx-0 lg:grid lg:grid-cols-6 lg:gap-x-8 lg:space-x-0">
                         @foreach($airlines as $airline)
                             <li class="inline-flex w-64 flex-col text-center lg:w-auto">
                                 <div class="group relative">
                                     @if(file_exists(public_path('images/tails/'.strtoupper($airline->IATA).'.png')))
-                                        <img src="{{ asset('images/tails/'.strtoupper($airline->IATA).'.png') }}" alt="{{ $airline->airline }}" class="aspect-square w-full p-6 rounded-md object-contain  border border-white/20 grayscale group-hover:grayscale-0 group-hover:scale-110" />
+                                        <img src="{{ asset('images/tails/'.strtoupper($airline->IATA).'.png') }}" alt="{{ $airline->airline }}" class="aspect-square w-full p-6 rounded-md object-contain  border border-white/20 grayscale group-hover:grayscale-0" />
                                     @else
                                         <div class="aspect-square w-full p-6 rounded-md object-contain border border-white/20 bg-[#212121] flex items-center justify-center">
                                             <i class="fa-solid fa-plane-up text-5xl text-gray-300 group-hover:text-white"></i>

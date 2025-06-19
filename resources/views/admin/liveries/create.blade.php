@@ -50,7 +50,7 @@
                                 <div class="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:py-6">
                                     <label for="IATA" class="block text-sm/6 font-medium text-white sm:pt-1.5">Kód IATA</label>
                                     <div class="mt-2 sm:col-span-2 sm:mt-0">
-                                        <input type="text" name="IATA" id="IATA" value="{{ old('IATA') }}" autocomplete="off" class="sm:max-w-xs" required />
+                                        <input type="text" name="IATA" id="IATA" value="{{ old('IATA') }}" autocomplete="off" class="sm:max-w-xs" readonly />
                                     </div>
                                 </div>
 

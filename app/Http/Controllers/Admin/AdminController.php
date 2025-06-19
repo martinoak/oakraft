@@ -28,7 +28,18 @@ class AdminController extends Controller
 
     public function tasks(): View
     {
-        return view('admin.tasks');
+        $tasks = file_get_contents(storage_path('app/private/tasks.txt'));
+
+        return view('admin.tasks', compact('tasks'));
+    }
+
+    public function saveTask(Request $request): RedirectResponse
+    {
+        $file = storage_path('app/private/tasks.txt');
+
+        file_put_contents($file, $request->input('tasks'));
+
+        return back()->with('success', 'Seznam úkolů byl aktualizován.');
     }
 
     public function templates(): View
