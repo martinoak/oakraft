@@ -22,6 +22,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [Controllers\Admin\AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('team', Controllers\Admin\TeamController::class)->names('admin.team');
     Route::get('tasks', [Controllers\Admin\AdminController::class, 'tasks'])->name('admin.tasks');
+    Route::post('tasks/save', [Controllers\Admin\AdminController::class, 'saveTask'])->name('admin.tasks.save');
     Route::get('templates', [Controllers\Admin\AdminController::class, 'templates'])->name('admin.templates');
     Route::get('templates/{template}', [Controllers\Admin\AdminController::class, 'downloadTemplate'])->name('admin.templates.download');
     Route::resource('liveries', Controllers\Admin\LiveryController::class)->names('admin.liveries');

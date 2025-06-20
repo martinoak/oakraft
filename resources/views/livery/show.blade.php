@@ -31,25 +31,27 @@
 
                     <div class="mt-8 lg:col-span-5">
                         <form>
-                            <!-- Size picker -->
-                            <div class="mt-8 mb-4">
-                                <div class="flex items-center justify-between">
-                                    <h2 class="text-lg font-medium text-gray-300">File type</h2>
-                                </div>
-                            </div>
-
-                            <fieldset aria-label="Choose a memory option">
-                                <div class="mt-2 grid grid-cols-1 gap-3">
-                                    <label aria-label="4 GB" class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-[#212121] px-3 py-2.5 has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-600 has-[:disabled]:opacity-25 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-emerald-600">
-                                        <input type="radio" name="file-type" value="jpg" class="absolute inset-0 appearance-none focus:outline-0 cursor-pointer disabled:cursor-not-allowed" />
-                                        <span class="text-sm font-semibold uppercase text-white">JPG (White background)</span>
+                            <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">File type</h3>
+                            <ul class="grid grid-cols-1 w-full gap-6">
+                                <li>
+                                    <input type="radio" id="hosting-small" name="file-type" value="jpg" class="hidden peer" required />
+                                    <label for="hosting-small" class="inline-flex items-center justify-between w-full p-5 text-gray-300 bg-[#212121] border border-gray-200 rounded-lg cursor-pointer peer-checked:border-emerald-600 peer-checked:text-emerald-600 peer-checked:font-bold hover:text-white hover:bg-white-5/70">
+                                        <div class="flex w-full justify-between">
+                                            <div class="text-lg font-semibold">JPG</div>
+                                            <div>White background</div>
+                                        </div>
                                     </label>
-                                    <label aria-label="8 GB" class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-[#212121] px-3 py-2.5 has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-600 has-[:disabled]:opacity-25 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-emerald-600">
-                                        <input type="radio" name="file-type" value="png" class="absolute inset-0 appearance-none focus:outline-0 cursor-pointer disabled:cursor-not-allowed" />
-                                        <span class="text-sm font-semibold uppercase text-white">PNG (Transparent background)</span>
+                                </li>
+                                <li>
+                                    <input type="radio" id="hosting-large" name="file-type" value="png" class="hidden peer" required />
+                                    <label for="hosting-large" class="inline-flex items-center justify-between w-full p-5 text-gray-300 bg-[#212121] border border-gray-200 rounded-lg cursor-pointer peer-checked:border-emerald-600 peer-checked:text-emerald-600 peer-checked:font-bold hover:text-white hover:bg-white-5/70">
+                                        <div class="flex w-full justify-between">
+                                            <div class="text-lg font-semibold">PNG</div>
+                                            <div>Transparent background</div>
+                                        </div>
                                     </label>
-                                </div>
-                            </fieldset>
+                                </li>
+                            </ul>
 
                             <hr class="border-gray-300 my-6">
 

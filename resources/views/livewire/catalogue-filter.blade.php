@@ -27,7 +27,7 @@
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 @endonce
                 <div class="group relative border-b border-r border-white/5 p-4 sm:p-6">
-                    <img src="{{ $livery->path }}" alt="{{ $livery->aircraft }}" class="aspect-square rounded-lg bg-gray-200 object-cover group-hover:opacity-75" />
+                    <img src="{{ $livery->path }}" alt="{{ $livery->aircraft }}" class="aspect-[4/3] w-full rounded-lg bg-[#212121] object-contain" />
                     <div class="pb-4 pt-10 text-center">
                         <h3 class="text-sm font-medium text-white">
                             <a href="{{ route('livery.show', ['livery' => $livery->id . '-' . strtolower(\Illuminate\Support\Str::slug($livery->airline) . '-' . \Illuminate\Support\Str::slug($livery->aircraft))]) }}">

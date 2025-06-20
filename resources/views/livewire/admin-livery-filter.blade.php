@@ -13,15 +13,15 @@
                             <input class="mt-2" type="text" wire:input="setFilter('airline', $event.target.value)">
                         </th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                            <span wire:click="sort('name')">Letadlo
-                                @if ($sortBy === 'name')
+                            <span wire:click="sort('aircraft')">Letadlo
+                                @if ($sortBy === 'aircraft')
                                     <span>@if($sortDirection === 'asc') ↑ @else ↓ @endif</span>
                                 @endif
                             </span>
-                            <input class="mt-2" type="text" wire:input="setFilter('name', $event.target.value)">
+                            <input class="mt-2" type="text" wire:input="setFilter('aircraft', $event.target.value)">
                         </th>
                         <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">
-                            <span wire:click="sort('name')">Kategorie</span>
+                            <span>Kategorie</span>
                             <fieldset>
                                 <div class="mt-2 grid grid-cols-3 gap-3 sm:grid-cols-2">
                                     <label class="group relative flex items-center justify-center rounded-md border border-gray-300 bg-[#212121] px-3 py-2.5 has-[:checked]:border-emerald-600 has-[:checked]:bg-emerald-600 has-[:disabled]:opacity-25 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-emerald-600">

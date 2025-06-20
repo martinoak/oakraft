@@ -30,15 +30,6 @@
     button {
         @apply cursor-pointer;
     }
-
-    .tiptap ul p,
-    .tiptap ol p {
-        @apply inline;
-    }
-
-    .tiptap p.is-editor-empty:first-child::before {
-        @apply pointer-events-none float-left h-0 text-sm;
-    }
 }
 
 @layer components {
@@ -66,5 +57,41 @@
 
     .toggler {
         @apply relative w-11 h-6 bg-gray-200 rounded-full dark:bg-gray-700 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-emerald-600 dark:peer-checked:bg-emerald-600;
+    }
+
+    .ProseMirror:focus {
+        outline: none;
+    }
+
+    h1.tiptap {
+        @apply text-3xl font-extrabold text-white;
+    }
+
+    h2.tiptap {
+        @apply text-2xl font-bold text-white;
+    }
+
+    h3.tiptap {
+        @apply text-xl font-semibold text-white;
+    }
+
+    .tiptap p,
+    .tiptap ul,
+    .tiptap ol {
+        margin: 0 0 1em 0;
+        color: white; /* Adjust as needed */
+        line-height: 1.6; /* Adjust line height for readability */
+    }
+
+    .tiptap ul p,
+    .tiptap ol p {
+        display: inline;
+    }
+
+    .tiptap p.is-editor-empty:first-child::before {
+        content: attr(data-placeholder);
+        float: left;
+        height: 0;
+        pointer-events: none;
     }
 }

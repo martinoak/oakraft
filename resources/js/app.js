@@ -93,4 +93,26 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mobileFilterBackdrop) {
         mobileFilterBackdrop.addEventListener('click', closeMobileFilter);
     }
+
+    // --- Admin mobile sidebar ---
+    const adminMobileMenuButton = document.getElementById('admin-mobile-menu-button');
+    const adminMobileMenuClose = document.getElementById('admin-mobile-menu-close');
+    const adminMobileMenu = document.getElementById('admin-mobile-menu');
+
+    if (adminMobileMenuButton && adminMobileMenu && adminMobileMenuClose) {
+        adminMobileMenuButton.addEventListener('click', function() {
+            adminMobileMenu.classList.remove('hidden');
+        });
+
+        adminMobileMenuClose.addEventListener('click', function() {
+            adminMobileMenu.classList.add('hidden');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!adminMobileMenu.contains(event.target) && !adminMobileMenuButton.contains(event.target)) {
+                adminMobileMenu.classList.add('hidden');
+            }
+        });
+    }
 });
