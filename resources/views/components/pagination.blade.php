@@ -12,15 +12,15 @@
     </div>
     <div class="flex flex-1 justify-between sm:justify-end space-x-2">
         @if($paginable->onFirstPage())
-            <button class="button-gray cursor-not-allowed">Předchozí</button>
+            <button class="button-gray cursor-not-allowed">Previous</button>
         @else
-            <button wire:click="paginate({{ $paginable->currentPage() - 1 }})" class="button-gray">Předchozí</button>
+            <button wire:click="paginate({{ $paginable->currentPage() - 1 }})" class="button-gray">Previous</button>
         @endif
 
         @if($paginable->hasMorePages())
-            <button wire:click="paginate({{ $paginable->currentPage() + 1 }})" class="button">Další</button>
+            <button wire:click="paginate({{ $paginable->currentPage() + 1 }})" class="button">Next</button>
         @else
-            <button class="button cursor-not-allowed">Další</button>
+            <button class="button cursor-not-allowed">Next</button>
         @endif
     </div>
 </nav>
