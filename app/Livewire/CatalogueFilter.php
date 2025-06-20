@@ -15,8 +15,8 @@ class CatalogueFilter extends Component
     protected const PER_PAGE = 12;
 
     public array $filter = [];
-    public string $sortBy = 'updated_at';
-    public string $sortDirection = self::DESC;
+    public string $sortBy = 'airline';
+    public string $sortDirection = self::ASC;
     public bool $showWishlistForm = false;
     public string $wishlistText = '';
     public string $formMessage = '';
