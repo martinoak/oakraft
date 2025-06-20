@@ -57,7 +57,7 @@
 
             <div class="mt-6 grid grid-cols-3 gap-x-4 gap-y-10 sm:gap-x-6 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8 md:gap-y-0 lg:gap-x-8">
                 @foreach($airlines as $airline)
-                <div class="group relative text-center">
+                <div class="group relative text-center mb-5">
                     <div class="w-full overflow-hidden rounded-md group-hover:opacity-75">
                         @if(file_exists(public_path('images/tails/'.strtoupper($airline->IATA).'.png')))
                             <img src="{{ asset('images/tails/'.strtoupper($airline->IATA).'.png') }}" alt="{{ $airline->airline }}" class="aspect-square w-full p-6 rounded-md object-contain  border border-white/20 grayscale group-hover:grayscale-0" />
